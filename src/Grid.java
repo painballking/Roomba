@@ -1,25 +1,52 @@
+import java.util.ArrayList;
+import java.util.List;
 
-public class Better2048 {
+public class Grid {
 
-    enum Move {
+    protected enum Move {
         LEFT, RIGHT, UP, DOWN
     }
 
-    public static void move(int[][] grid, Move direction) {
+    public int[][] grid;
 
-        rotate(grid, direction);
-        collapse(grid);
-
-        if (direction == Move.UP) {
-            rotate(grid, Move.DOWN);
-        } else if (direction == Move.DOWN) {
-            rotate(grid, Move.UP);
-        } else if (direction == Move.RIGHT) {
-            rotate(grid, Move.RIGHT);
+    public Grid() {
+        grid = new int[4][4];
+        for (int i = 0; i < 2; i++) {
+            grid[(int) (Math.random() * 4)][(int) (Math.random() * 4)] = 2;
         }
     }
 
-    public static void rotate(int[][] grid, Move direction){
+    public void moveLeft() {
+        move(Move.LEFT);
+    }
+
+    public void moveRight() {
+        move(Move.RIGHT);
+    }
+
+    public void moveUp() {
+        move(Move.UP);
+    }
+
+    public void moveDown() {
+        move(Move.DOWN);
+    }
+
+    private void move(Move direction) {
+
+        rotate(direction);
+        collapse();
+
+        if (direction == Move.UP) {
+            rotate(Move.DOWN);
+        } else if (direction == Move.DOWN) {
+            rotate(Move.UP);
+        } else if (direction == Move.RIGHT) {
+            rotate(Move.RIGHT);
+        }
+    }
+
+    private void rotate(Move direction){
         int[][] temp = new int[4][4];
         for (int i = 0; i < 4; i++) {
             temp[i] = grid[i].clone();
@@ -56,7 +83,7 @@ public class Better2048 {
         }
     }
 
-    public static void collapse(int[][] grid){
+    private void collapse(){
         for (int i = 0; i < 4; i++) {
             int placePointer = 0;
             int lastValIndex = -1;
@@ -84,14 +111,26 @@ public class Better2048 {
         }
     }
 
-    public static void printGrid(int[][] grid) {
+    public void addNum() {
+        List<Integer> placeable = getPlaceable();
+        int spot = (int) (Math.random()*placeable.size());
+        grid[spot / 4][spot % 4] = twoOrFour();
+    }
+
+    private int twoOrFour(){
+        return Math.random() < .8 ? 2 : 4;
+    }
+
+    private List<Integer> getPlaceable() {
+        List<Integer> placeable = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++){
-                System.out.print(grid[i][j] + " ");
+            for (int j = 0; j < 4; j++) {
+                if (grid[i][j] != 0) {
+                    placeable.add((i * 4) + j);
+                }
             }
-            System.out.println();
         }
-        System.out.println();
+        return placeable;
     }
 
 }

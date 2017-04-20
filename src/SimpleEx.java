@@ -10,12 +10,14 @@ public class SimpleEx extends JFrame {
 
     private void initUI() {
 
-        JLabel label = new JLabel("KeK");
-        createLayout(label);
+        JLabel line1 = new JLabel("1 2 3 4");
+        JLabel line2 = new JLabel("2 3 4 1");
+        JLabel line3 = new JLabel("3 4 1 2");
+        JLabel line4 = new JLabel("4 1 2 3");
+        createLayout(line1, line2, line3, line4);
 
 
         setTitle("Simple example");
-        setSize(300, 200);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -28,8 +30,20 @@ public class SimpleEx extends JFrame {
 
         gl.setAutoCreateContainerGaps(true);
 
-        gl.setHorizontalGroup(gl.createSequentialGroup().addComponent(arg[0]));
-        gl.setVerticalGroup(gl.createParallelGroup().addComponent(arg[0]));
+        gl.setHorizontalGroup(
+            gl.createParallelGroup()
+                .addComponent(arg[0])
+                .addComponent(arg[1])
+                .addComponent(arg[2])
+                .addComponent(arg[3])
+        );
+        gl.setVerticalGroup(
+            gl.createSequentialGroup()
+                .addComponent(arg[0])
+                .addComponent(arg[1])
+                .addComponent(arg[2])
+                .addComponent(arg[3])
+        );
 
         pack();
     }
