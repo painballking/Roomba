@@ -11,7 +11,7 @@ public class TwentyFour extends JFrame {
         Board board = new Board(this);
         add(board);
 
-        setSize(50, 50);
+        setSize(0, 150);
         setTitle("2048");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

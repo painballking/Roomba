@@ -3,6 +3,8 @@ import java.util.List;
 
 public class Grid {
 
+    private boolean moveHappened;
+
     protected enum Move {
         LEFT, RIGHT, UP, DOWN
     }
@@ -28,9 +30,7 @@ public class Grid {
         move(Move.UP);
     }
 
-    public void moveDown() {
-        move(Move.DOWN);
-    }
+    public void moveDown() { move(Move.DOWN); }
 
     private void move(Move direction) {
 
@@ -111,7 +111,7 @@ public class Grid {
         }
     }
 
-    public void addNum() {
+    private void addNum() {
         List<Integer> placeable = getPlaceable();
         int spot = (int) (Math.random()*placeable.size());
         grid[spot / 4][spot % 4] = twoOrFour();
