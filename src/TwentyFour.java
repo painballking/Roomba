@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class TwentyFour extends JFrame {
 
@@ -11,8 +12,9 @@ public class TwentyFour extends JFrame {
         Board board = new Board(this);
         add(board);
 
-        setSize(0, 150);
+        setSize(211, 234);
         setTitle("2048");
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }

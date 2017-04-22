@@ -18,17 +18,11 @@ public class Grid {
         }
     }
 
-    public void moveLeft() {
-        move(Move.LEFT);
-    }
+    public void moveLeft() { move(Move.LEFT); }
 
-    public void moveRight() {
-        move(Move.RIGHT);
-    }
+    public void moveRight() { move(Move.RIGHT); }
 
-    public void moveUp() {
-        move(Move.UP);
-    }
+    public void moveUp() { move(Move.UP); }
 
     public void moveDown() { move(Move.DOWN); }
 
@@ -101,6 +95,7 @@ public class Grid {
                         if (placePointer != lastValIndex) grid[i][lastValIndex] = 0;
                         lastValIndex = (grid[i][j] == 0) ? -1 : j;
                         placePointer++;
+
                     }
                 }
             }
@@ -131,6 +126,16 @@ public class Grid {
             }
         }
         return placeable;
+    }
+
+    public void printGrid() {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.print(grid[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 
 }

@@ -4,6 +4,7 @@ import javax.swing.*;
 
 public class Board extends JPanel{
 
+    private static final int SQUARE_SIZE = 40;
 
     private Grid grid;
 
@@ -27,22 +28,30 @@ public class Board extends JPanel{
     }
 
     private void doDrawing(Graphics g) {
-        String[] rows = getRows();
+
         for (int i = 0; i < 4; i++) {
-            g.drawString(rows[i], 5, (i * 15 + 15));
+            for (int j = 0; j < 4; j++) {
+                g.setColor(Color.LIGHT_GRAY);
+                drawSquare(g, 45 * i + 15, 45 * j + 15);
+
+                g.setColor(Color.BLACK);
+                drawCenteredNum(g, grid.grid[j][i], 45 * i + 15, 45 * j + 15, g.getFont());
+            }
         }
     }
 
-    private String[] getRows() {
-        String[] rows = new String[4];
-        for (int i = 0; i < 4; i++) {
-            StringBuilder row = new StringBuilder();
-            for (int j = 0; j < 4; j++) {
-                row.append(grid.grid[i][j] + " ");
-            }
-            rows[i] = row.toString();
-        }
-        return rows;
+    private void drawCenteredNum(Graphics g, int num, int x, int y, Font font) {
+        FontMetrics metrics = g.getFontMetrics(font);
+
+        x += (SQUARE_SIZE - metrics.stringWidth(Integer.toString(num))) / 2;
+        y += (SQUARE_SIZE - metrics.getHeight()) / 2 + metrics.getAscent();
+
+        g.setFont(font);
+        g.drawString(Integer.toString(num), x, y);
+    }
+
+    private void drawSquare(Graphics g, int x, int y) {
+        g.fillRect(x, y, SQUARE_SIZE, SQUARE_SIZE);
     }
 
     class TAdapter extends KeyAdapter {
@@ -55,6 +64,7 @@ public class Board extends JPanel{
             switch (keycode) {
 
                 case KeyEvent.VK_LEFT:
+                    System.out.println("Left");
                     grid.moveLeft();
                     break;
                 case KeyEvent.VK_RIGHT:
