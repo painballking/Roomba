@@ -1,3 +1,5 @@
+package TwentyFourtyEight;
+
 import javax.swing.*;
 
 public class TwentyFour extends JFrame {

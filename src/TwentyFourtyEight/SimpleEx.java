@@ -1,3 +1,5 @@
+package TwentyFourtyEight;
+
 import java.awt.*;
 import javax.swing.*;
 
