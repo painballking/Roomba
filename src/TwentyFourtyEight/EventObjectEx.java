@@ -1,3 +1,4 @@
+package TwentyFourtyEight;
 
 import java.awt.Container;
 import java.awt.EventQueue;
@@ -12,7 +13,6 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JList;
 
 public class EventObjectEx extends JFrame {
