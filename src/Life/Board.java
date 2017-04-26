@@ -6,8 +6,10 @@ import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
 
-    private final static int TILE_SIZE = 10;
-    private final static int BOARD_SIZE = 50;
+    private final static int TILE_SIZE = 15;
+    private final static int BOARD_SIZE = 20;
+    private final static int BORDER = 2;
+    private final static int TILE_GAP = 2;
 
 
     private Cell[][] grid;
@@ -19,31 +21,37 @@ public class Board extends JPanel implements ActionListener {
     private void initBoard() {
 
         setFocusable(true);
-        setBackground(Color.WHITE);
+        setBackground(Color.LIGHT_GRAY);
+        setPreferredSize(new Dimension(BORDER + TILE_SIZE * BOARD_SIZE + TILE_GAP * (BOARD_SIZE - 1) + BORDER,
+                BORDER + TILE_SIZE * BOARD_SIZE + TILE_GAP * (BOARD_SIZE - 1) + BORDER
+        ));
 
         createGrid();
         setBasicShape();
 
-        Timer timer = new Timer(400, this);
+        Timer timer = new Timer(700, this);
         timer.start();
 
     }
 
-    public void paint(Graphics g) {
-        super.paint(g);
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         for (int i = 0; i < BOARD_SIZE; i++) {
             for(int j = 0 ; j < BOARD_SIZE; j++) {
-                if (grid[j][i].getState()) {
-                    g.fillRect(2 + i * (TILE_SIZE + 2), 2 + j * (TILE_SIZE + 2), TILE_SIZE, TILE_SIZE);
-                }
+
+                if (grid[i][j].getState()) g.setColor(Color.black);
+                else g.setColor(Color.white);
+
+                g.fillRect(BORDER + i * (TILE_SIZE + TILE_GAP), BORDER + j * (TILE_SIZE + TILE_GAP), TILE_SIZE, TILE_SIZE);
             }
         }
     }
 
     private void setBasicShape() {
-        grid[25][24].setState();
-        grid[25][25].setState();
-        grid[25][26].setState();
+        grid[BOARD_SIZE/2][BOARD_SIZE/2 - 1].setState();
+        grid[BOARD_SIZE/2][BOARD_SIZE/2].setState();
+        grid[BOARD_SIZE/2][BOARD_SIZE/2 + 1].setState();
     }
 
     public void actionPerformed(ActionEvent e) {

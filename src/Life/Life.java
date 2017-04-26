@@ -1,6 +1,8 @@
 package Life;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Life extends JFrame {
 
@@ -12,8 +14,9 @@ public class Life extends JFrame {
 
         Board board = new Board(this);
         add(board);
+        pack();
 
-        setSize(500, 500);
+
         setTitle("Game of Life");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
