@@ -13,7 +13,7 @@ public class Life extends JFrame {
         Board board = new Board(this);
         add(board);
 
-        setSize(200, 200);
+        setSize(500, 500);
         setTitle("Game of Life");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
