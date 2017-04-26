@@ -4,6 +4,7 @@ import java.util.List;
 public class Grid {
 
     private boolean moveHappened;
+    private int topNum;
 
     protected enum Move {
         LEFT, RIGHT, UP, DOWN
@@ -12,6 +13,7 @@ public class Grid {
     public int[][] grid;
 
     public Grid() {
+        topNum = 2;
         grid = new int[4][4];
         for (int i = 0; i < 2; i++) {
             grid[(int) (Math.random() * 4)][(int) (Math.random() * 4)] = 2;
@@ -38,6 +40,9 @@ public class Grid {
         } else if (direction == Move.RIGHT) {
             rotate(Move.RIGHT);
         }
+
+        if (moveHappened) addNum();
+        moveHappened = false;
     }
 
     private void rotate(Move direction){
@@ -79,21 +84,30 @@ public class Grid {
 
     private void collapse(){
         for (int i = 0; i < 4; i++) {
+
             int placePointer = 0;
             int lastValIndex = -1;
+
             for (int j = 0; j < 4; j++) {
+
                 if (grid[i][j] != 0) {
                     if (lastValIndex < 0) {
                         lastValIndex = j;
                     } else {
                         if (grid[i][j] == grid[i][lastValIndex]) {
                             grid[i][placePointer] = grid[i][j] * 2;
+                            if (grid[i][placePointer] > topNum) topNum = grid[i][placePointer];
                             grid[i][j] = 0;
                         } else {
                             grid[i][placePointer] = grid[i][lastValIndex];
                         }
                         if (placePointer != lastValIndex) grid[i][lastValIndex] = 0;
-                        lastValIndex = (grid[i][j] == 0) ? -1 : j;
+                        if (grid[i][j] == 0) {
+                            moveHappened = true;
+                            lastValIndex = -1;
+                        } else {
+                            lastValIndex = j;
+                        }
                         placePointer++;
 
                     }
@@ -102,14 +116,17 @@ public class Grid {
             if (lastValIndex > 0){
                 grid[i][placePointer] = grid[i][lastValIndex];
                 if (placePointer != lastValIndex) grid[i][lastValIndex] = 0;
+                moveHappened = true;
             }
         }
     }
 
     private void addNum() {
         List<Integer> placeable = getPlaceable();
-        int spot = (int) (Math.random()*placeable.size());
-        grid[spot / 4][spot % 4] = twoOrFour();
+        int spot = placeable.get((int) (Math.random() * placeable.size()));
+        int num = twoOrFour();
+        if (num > topNum) topNum = num;
+        grid[spot / 4][spot % 4] = num;
     }
 
     private int twoOrFour(){
@@ -120,7 +137,7 @@ public class Grid {
         List<Integer> placeable = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                if (grid[i][j] != 0) {
+                if (grid[i][j] == 0) {
                     placeable.add((i * 4) + j);
                 }
             }
@@ -137,5 +154,7 @@ public class Grid {
         }
         System.out.println();
     }
+
+    public float getTopNum() { return (float) topNum; }
 
 }

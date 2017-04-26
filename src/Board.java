@@ -31,11 +31,18 @@ public class Board extends JPanel{
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                g.setColor(Color.LIGHT_GRAY);
-                drawSquare(g, 45 * i + 15, 45 * j + 15);
+                if (grid.grid[j][i] == 0) {
+                    drawSquare(g, 45 * i + 15, 45 * j + 15, Color.LIGHT_GRAY);
+                } else {
+                    drawSquare(g, 45 * i + 15, 45 * j + 15,
+                            new Color((int) (155 - 100 * (Math.log(grid.grid[j][i]) / Math.log(grid.getTopNum()))),
+                                    (int) (155 - 100 * (Math.log(grid.grid[j][i]) / Math.log(grid.getTopNum()))), 255)
+                    );
+                }
 
-                g.setColor(Color.BLACK);
-                drawCenteredNum(g, grid.grid[j][i], 45 * i + 15, 45 * j + 15, g.getFont());
+                g.setColor(Color.WHITE);
+                Font f = new Font(g.getFont().getName(), Font.BOLD, 20);
+                drawCenteredNum(g, grid.grid[j][i], 45 * i + 15, 45 * j + 15, f);
             }
         }
     }
@@ -50,7 +57,8 @@ public class Board extends JPanel{
         g.drawString(Integer.toString(num), x, y);
     }
 
-    private void drawSquare(Graphics g, int x, int y) {
+    private void drawSquare(Graphics g, int x, int y, Color c) {
+        g.setColor(c);
         g.fillRect(x, y, SQUARE_SIZE, SQUARE_SIZE);
     }
 
@@ -64,7 +72,6 @@ public class Board extends JPanel{
             switch (keycode) {
 
                 case KeyEvent.VK_LEFT:
-                    System.out.println("Left");
                     grid.moveLeft();
                     break;
                 case KeyEvent.VK_RIGHT:
