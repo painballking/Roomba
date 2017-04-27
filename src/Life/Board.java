@@ -13,6 +13,7 @@ public class Board extends JPanel implements ActionListener {
 
 
     private Cell[][] grid;
+    private Timer timer;
 
     public Board (Life parent) {
         initBoard();
@@ -22,14 +23,16 @@ public class Board extends JPanel implements ActionListener {
 
         setFocusable(true);
         setBackground(Color.LIGHT_GRAY);
-        setPreferredSize(new Dimension(BORDER + TILE_SIZE * BOARD_SIZE + TILE_GAP * (BOARD_SIZE - 1) + BORDER,
-                BORDER + TILE_SIZE * BOARD_SIZE + TILE_GAP * (BOARD_SIZE - 1) + BORDER
+        setPreferredSize(new Dimension(BORDER + TILE_SIZE * BOARD_SIZE + TILE_GAP * (BOARD_SIZE - 1) - TILE_SIZE / 2 - 1,
+                BORDER + TILE_SIZE * BOARD_SIZE + TILE_GAP * (BOARD_SIZE - 1) - TILE_SIZE / 2 - 1
         ));
+        addKeyListener(new TAdapter());
+        addMouseListener(new Mouse());
 
         createGrid();
         setBasicShape();
 
-        Timer timer = new Timer(700, this);
+        timer = new Timer(700, this);
         timer.start();
 
     }
@@ -82,6 +85,34 @@ public class Board extends JPanel implements ActionListener {
 
     }
 
+    private void switchTimer(){
+        if (timer.isRunning()) {
+            timer.stop();
+        } else {
+            timer.start();
+        }
+    }
+
+    class Mouse extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            grid[(e.getX() - 2) / (TILE_GAP + TILE_SIZE)][(e.getY() - 2) / (TILE_GAP + TILE_SIZE )].swapState();
+            repaint();
+        }
+    }
+
+    class TAdapter extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+            int keycode = e.getKeyCode();
+            if (keycode == KeyEvent.VK_SPACE) {
+                switchTimer();
+            }
+        }
+    }
 
 }
 

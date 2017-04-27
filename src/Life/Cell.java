@@ -35,5 +35,6 @@ public class Cell {
     public void update() { state = nextState; }
     public void setState() {state = true;}
     public boolean getState() { return state; }
+    public void swapState() { state = !state; }
 
 }
