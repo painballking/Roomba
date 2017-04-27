@@ -15,7 +15,7 @@ public class Board extends JPanel implements ActionListener {
     private Cell[][] grid;
     private Timer timer;
 
-    public Board (Life parent) {
+    public Board () {
         initBoard();
     }
 
@@ -32,7 +32,7 @@ public class Board extends JPanel implements ActionListener {
         createGrid();
         setBasicShape();
 
-        timer = new Timer(700, this);
+        timer = new Timer(400, this);
         timer.start();
 
     }
@@ -52,9 +52,9 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void setBasicShape() {
-        grid[BOARD_SIZE/2][BOARD_SIZE/2 - 1].setState();
-        grid[BOARD_SIZE/2][BOARD_SIZE/2].setState();
-        grid[BOARD_SIZE/2][BOARD_SIZE/2 + 1].setState();
+        grid[BOARD_SIZE/2][BOARD_SIZE/2 - 1].setState(true);
+        grid[BOARD_SIZE/2][BOARD_SIZE/2].setState(true);
+        grid[BOARD_SIZE/2][BOARD_SIZE/2 + 1].setState(true);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -97,7 +97,9 @@ public class Board extends JPanel implements ActionListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            grid[(e.getX() - 2) / (TILE_GAP + TILE_SIZE)][(e.getY() - 2) / (TILE_GAP + TILE_SIZE )].swapState();
+            Cell cell = grid[(e.getX() - 2) / (TILE_GAP + TILE_SIZE)][(e.getY() - 2) / (TILE_GAP + TILE_SIZE )];
+            cell.swapState();
+
             repaint();
         }
     }

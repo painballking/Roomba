@@ -33,8 +33,11 @@ public class Cell {
     }
 
     public void update() { state = nextState; }
-    public void setState() {state = true;}
+    public void setState(boolean s) {state = s;}
     public boolean getState() { return state; }
-    public void swapState() { state = !state; }
+    public void swapState() {
+        state = !state;
+        nextState = state;
+    }
 
 }

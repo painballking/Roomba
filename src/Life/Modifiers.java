@@ -6,6 +6,13 @@ import java.awt.event.ActionListener;
 
 public class Modifiers extends JPanel implements ActionListener {
 
+    public Modifiers(){
+        initUi();
+    }
+
+    private void initUi() {
+        setFocusable(true);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
